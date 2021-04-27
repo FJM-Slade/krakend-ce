@@ -1,6 +1,6 @@
 ![Krakend logo](https://github.com/devopsfaith/krakend/blob/master/docs/images/krakend.png)
 
-# KrakenD API Gateway
+# KrakenD API Gateway 2
 Ultra-High performance API Gateway with middlewares
 
 **KrakenD Community Edition** (or *KrakenD-CE*) is the binary distribution of [KrakenD](http://www.krakend.io).
