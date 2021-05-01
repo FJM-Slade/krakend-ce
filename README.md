@@ -9,6 +9,10 @@ In this repository, you'll find the utils to build the KrakenD binary yourself. 
 
 [KrakenD Site](http://www.krakend.io/) | [Documentation](http://www.krakend.io/docs/overview/introduction/) | [Blog](http://www.krakend.io/blog) | [Twitter](https://twitter.com/devopsfaith)
 
+## Forked for Integration Hub
+This version was forked from [Krakend-ce](https://github.com/devopsfaith/krakend-ce)
+
+
 ## Features
 Some of the features you get with KrakenD are:
 

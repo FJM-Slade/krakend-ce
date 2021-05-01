@@ -1,0 +1,130 @@
+  {
+    "method": "POST",
+    "endpoint": "/api/v2/login",
+    "headers_to_pass":[
+        "Accept",
+        "Content-Type",
+        "X-Tenant",
+        "X-User-Id",
+        "X-Lang",
+        "X-Correlation-Id"
+    ],
+    "backend": [
+      {
+        "host": "http://localhost:8080",
+        "url_pattern": "/api/v2/login",
+        "encoding": "no-op"
+      }
+    ],
+    "output_encoding": "no-op"
+  },
+  {
+    "method": "POST",
+    "endpoint": "/api/v2/reset-password",
+    "headers_to_pass":[
+        "Accept",
+        "Content-Type",
+        "X-Tenant",
+        "X-User-Id",
+        "X-Lang",
+        "X-Correlation-Id"
+    ],
+    "backend": [
+      {
+        "host": "http://users-app:8080",
+        "url_pattern": "/api/v2/reset-password",
+        "encoding": "no-op"
+      }
+    ],
+    "output_encoding": "no-op"
+  },
+  {
+    "method": "GET",
+    "endpoint": "/api/v2/reset-password/{id}",
+    "headers_to_pass":[
+        "Accept",
+        "Content-Type",
+        "X-Tenant",
+        "X-User-Id",
+        "X-Lang",
+        "X-Correlation-Id"
+    ],
+    "backend": [
+      {
+        "host": "http://users-app:8080",
+        "url_pattern": "/api/v2/reset-password/{id}",
+        "encoding": "no-op"
+      }
+    ],
+    "output_encoding": "no-op"
+  },
+  {
+    "method": "PATCH",
+    "endpoint": "/api/v2/reset-password/{id}",
+    "headers._to_pass":[
+        "Accept",
+        "Content-Type",
+        "X-Tenant",
+        "X-User-Id",
+        "X-Lang",
+        "X-Correlation-Id"
+    ],
+    "backend": [
+      {
+        "host": "http://users-app:8080",
+        "url_pattern": "/api/v2/reset-password/{id}",
+        "encoding": "no-op"
+      }
+    ],
+    "output_encoding": "no-op"
+  },
+  {
+      "method": "POST",
+      "endpoint": "/api/v2/login/cross-tenant",
+      "headers_to_pass": [
+        "X-Tenant",
+        "X-User-Id",
+        "X-Correlation-Id",
+        "Authorization"
+      ],
+      "backend": [
+        {
+          "host": "http://users-app:8080",
+          "url_pattern": "/api/v2/login/cross-tenant",
+          "encoding": "no-op"
+        }
+      ],
+      "output_encoding": "no-op",
+      "extra_config":{
+              "github.com/devopsfaith/krakend-jose/validator":{
+              "alg":"RS256",
+              "jwk-url":"http://users-app:8080/v2/jwk",
+              "disable_jwk_security":true
+              }
+          }
+  },
+  {
+        "method": "POST",
+        "endpoint": "/api/v2/login/logout",
+        "headers_to_pass": [
+          "X-Tenant",
+          "X-User-Id",
+          "X-Correlation-Id",
+          "Authorization"
+        ],
+        "backend": [
+          {
+            "host": "http://users-app:8080",
+            "url_pattern": "/api/v2/login/logout",
+            "encoding": "no-op"
+          }
+        ],
+        "output_encoding": "no-op",
+        "extra_config":{
+                "github.com/devopsfaith/krakend-jose/validator":{
+                "alg":"RS256",
+                "jwk-url":"http://users-app:8080/v2/jwk",
+                "disable_jwk_security":true
+                }
+            }
+    }

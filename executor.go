@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 
+    middleware "integration-hub/middleware"
 	krakendbf "github.com/devopsfaith/bloomfilter/krakend"
 	cel "github.com/devopsfaith/krakend-cel"
 	cmd "github.com/devopsfaith/krakend-cobra"
@@ -160,7 +161,9 @@ func (e *ExecutorBuilder) NewCmdExecutor(ctx context.Context) cmd.Executor {
 				e.BackendFactory.NewBackendFactory(ctx, logger, metricCollector),
 				metricCollector,
 			),
-			Middlewares:    e.Middlewares,
+			Middlewares:    []gin.HandlerFunc{
+            			middleware.IntegrationHub,
+            },
 			Logger:         logger,
 			HandlerFactory: e.HandlerFactory.NewHandlerFactory(logger, metricCollector, tokenRejecterFactory),
 			RunServer:      router.RunServerFunc(e.RunServerFactory.NewRunServer(logger, krakendrouter.RunServer)),
