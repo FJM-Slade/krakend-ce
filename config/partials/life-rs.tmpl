@@ -1,0 +1,78 @@
+{
+    "method":"GET",
+    "endpoint":"/i2s-life-rs/services/policyholders/{id}",
+    "headers_to_pass":[
+        "Accept",
+        "Content-Type",
+        "txId",
+        "Authorization"
+    ],
+    "querystring_params":[
+    ],
+    "backend":[
+        {
+        "host":"https://srvintapache.asterix.local",
+        "url_pattern":"/i2s-life-rs/services/policyholders/{id}",
+        "encoding":"no-op"
+        }
+    ],
+    "output_encoding":"no-op"
+
+},
+{
+    "method":"POST",
+    "endpoint":"/eGISGIVProxy/services/ProxyConsultaGIV",
+    "headers_to_pass":[
+        "Origin",
+        "Authorization",
+        "Content-Type",
+        "Access-Control-Allow-Origin",
+        "Locale",
+        "Accept",
+        "X-Requested-With",
+        "Cache-Control",
+        "SOAPAction",
+        "Host",
+        "Accept-Encoding",
+        "Connection",
+        "Content-Length"
+    ],
+    "backend":[
+        {
+        "host":"http://gisint1.i2s.local",
+        "url_pattern":"/eGISGIVProxy/services/ProxyConsultaGIV",
+        "encoding":"no-op"
+        }
+    ],
+    "output_encoding":"no-op",
+    "extra_config": {
+    "github.com/devopsfaith/krakend/http": {
+        "return_error_details": "backend_alias"
+    }
+    }
+},
+{
+    "method":"GET",
+    "endpoint":"/eGISGIVProxy/services/ProxyConsultaGIV",
+    "headers_to_pass":[
+        "Accept",
+        "Content-Type",
+        "txId",
+        "SOAPAction"
+    ],
+    "querystring_params":["*"
+    ],
+    "backend":[
+        {
+        "host":"http://gisint1.i2s.local",
+        "url_pattern":"/eGISGIVProxy/services/ProxyConsultaGIV",
+        "encoding":"no-op"
+        }
+    ],
+    "output_encoding":"no-op",
+    "extra_config": {
+    "github.com/devopsfaith/krakend/http": {
+        "return_error_details": "backend_alias"
+    }
+    }
+}

@@ -80,6 +80,8 @@ require (
 	gocloud.dev/pubsub/natspubsub v0.21.0 // indirect
 	gocloud.dev/pubsub/rabbitpubsub v0.21.0 // indirect
 	gocloud.dev/secrets/hashivault v0.21.0 // indirect
+	google.golang.org/protobuf v1.25.0
 	gopkg.in/Graylog2/go-gelf.v2 v2.0.0-20180326133423-4dbb9d721348 // indirect
+	gopkg.in/guregu/null.v3 v3.5.0
 	k8s.io/api v0.20.2 // indirect
 )
