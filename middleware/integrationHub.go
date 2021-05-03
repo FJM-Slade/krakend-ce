@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 
@@ -85,11 +84,11 @@ func fillPayload(txId string, c *gin.Context) {
 	msg.Step_id = "TXBEGIN"
 	msg.Event_type = "4"
 	msg.Tx_ttl = 0
-	msgBodyBytes, err := ioutil.ReadAll(c.Request.Body)
+	/*msgBodyBytes, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		//return
 	}
-	msg.Msg_data = string(msgBodyBytes)
+	msg.Msg_data = string(msgBodyBytes) */
 	msg.User_msg = c.Request.URL.User.Username()
 	//msg.Message_id =
 	msg.Request_url = c.Request.URL.RawPath
@@ -110,14 +109,15 @@ func fillPayload(txId string, c *gin.Context) {
 
 	fmt.Println("\nRequest method: " + c.Request.Method)
 	fmt.Println("Request proto minor: " + strconv.FormatInt((int64(c.Request.ProtoMinor)), 10))
-	fmt.Println("Request rsBodyBytes: " + string(msgBodyBytes))
+	//fmt.Println("Request rsBodyBytes: " + string(msgBodyBytes))
 
 	c.Request.Header.Set("txId", txId)
+
 	fmt.Println("Request txId: " + c.GetHeader("txId") + "\n")
 
-	if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
-		fmt.Println("AMQ ERROR:", err)
-	}
+	//if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
+	//	fmt.Println("AMQ ERROR:", err)
+	//}
 
 }
 
@@ -167,6 +167,10 @@ func ginBodyLogMiddleware(txId string, c *gin.Context) {
 		panic(err)
 	}
 	fmt.Println("Response struct: " + string(out) + "\n")
+
+	//if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
+	//	fmt.Println("AMQ ERROR:", err)
+	//}
 
 }
 
