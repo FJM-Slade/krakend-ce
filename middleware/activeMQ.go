@@ -27,6 +27,8 @@
 package middleware
 
 import (
+	"time"
+
 	stomp "github.com/go-stomp/stomp"
 )
 
@@ -60,6 +62,7 @@ func (this *ActiveMQ) Connect() (*stomp.Conn, error) {
 
 // Send msg to destination
 func (this *ActiveMQ) Send(destination string, msg string) error {
+	time.Sleep(5 * time.Second)
 	conn, err := this.Connect()
 	if err != nil {
 		return err

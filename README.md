@@ -19,21 +19,17 @@ These instructions will get you a copy of the project up and running on your loc
 
 Make sure the OS meets all pre-requisites and then:
 
-1. Install brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+1. Install go
 
-2. Install go
-brew install go@1.21
-
-3. Add GOPATH to environment variable PATH
+2. Add GOPATH to environment variable PATH
 echo 'export PATH="/usr/local/opt/go@1.21/bin:$PATH"' >> ~/.zshrc (ZSH shell)
 
-4. Clone repository
+3. Clone repository
 git@github.com:FJM-Slade/krakend-ce.git
 
 https://github.com/FJM-Slade/krakend-ce.git
 
-5. Execute script
+4. Execute script
 ./scripts/build_and_run.sh
 
 ```

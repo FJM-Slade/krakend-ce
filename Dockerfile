@@ -1,23 +1,32 @@
-FROM debian:buster-slim
+FROM alpine:3.13.5
 
-LABEL maintainer="dortiz@devops.faith"
 
-RUN apt-get update && \
-	apt-get install -y ca-certificates && \
-	update-ca-certificates && \
-	rm -rf /var/lib/apt/lists/*
+COPY  ./config/asterix.local.crt.cer /usr/local/share/ca-certificates/my-cert.crt
 
-ADD krakend /usr/bin/krakend
+RUN apk add --no-cache ca-certificates tzdata
+RUN update-ca-certificates
+#RUN cat /usr/local/share/ca-certificates/my-cert.crt >> /etc/ssl/certs/ca-certificates.crt && \
+ #   apk --no-cache add \
+  #      curl
+COPY ./config /etc/krakend/
+COPY ./binaries/integration-hub /usr/bin/krakend
 
-RUN useradd -r -c "KrakenD user" -U krakend
-
-USER krakend
 
 VOLUME [ "/etc/krakend" ]
 
-WORKDIR /etc/krakend
+ARG appVersion
+ARG commitId
+ENV APP_VERSION=$appVersion
+ENV COMMIT_ID=$commitId
+
+RUN echo IMAGE_VERSION: $APP_VERSION-$COMMIT_ID
+
+ARG appVersion
+ARG commitId
+ENV APP_VERSION=$appVersion
+ENV COMMIT_ID=$commitId
 
 ENTRYPOINT [ "/usr/bin/krakend" ]
-CMD [ "run", "-c", "/etc/krakend/krakend.json" ]
+CMD [ "run", "-c", "/etc/krakend/krakend.json"]
 
-EXPOSE 8000 8090
+EXPOSE 8090

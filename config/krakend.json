@@ -1,6 +1,6 @@
 {
    "version":2,
-   "timeout":"30s",
+   "timeout":"55s",
    "cache_ttl":"3s",
    "name":"gateway-integration-hub-v1.0",
    "port":"8090",
@@ -9,8 +9,7 @@
    "idle_timeout":"30s",
    "read_header_timeout":"1s",
    "host":[
-      "http://gateway.docker.internal:8080"
-   ],
+         ],
   "extra_config":{
     "github_com/devopsfaith/krakend-cors":{
       "allow_origins":[],
@@ -55,6 +54,13 @@
         "Postman-Token",
         "SOAPAction"
       ]
+    },
+    "github_com/devopsfaith/krakend-gologging": {
+      "level": "DEBUG",
+      "prefix": "true",
+      "syslog": true,
+      "stdout": true,
+      "format": "default"
     }
   },
   "endpoints":[
@@ -65,7 +71,7 @@
           "url_pattern":"/"
         }
       ],
-      "headers_to_pass":[ "X-Tenant",  "X-User-Id", "X-Correlation-Id" ],
+      "headers_to_pass":[ "txId" ],
       "method":"GET",
       "output_encoding":"json",
       "extra_config":{
@@ -78,28 +84,7 @@
           }
         }
       }
-    },
-    {
-      "endpoint":"/api/version",
-      "backend":[
-        {
-          "url_pattern":"/"
-        }
-      ],
-      "headers_to_pass":[ "X-Tenant",  "X-User-Id", "X-Correlation-Id" ],
-      "method":"GET",
-      "output_encoding":"json",
-      "extra_config":{
-        "github.com/devopsfaith/krakend/proxy":{
-          "static":{
-            "data":{
-              "response":"2021.1"
-            },
-            "strategy":"allways"
-          }
-        }
-      }
-    },
+    },    
     {{ include "life-rs.tmpl" }}
 
   ]

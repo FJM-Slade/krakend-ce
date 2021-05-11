@@ -13,10 +13,16 @@
         {
         "host":"https://srvintapache.asterix.local",
         "url_pattern":"/i2s-life-rs/services/policyholders/{id}",
-        "encoding":"no-op"
+        "encoding":"no-op",
+        "disable_jwk_security":true
         }
     ],
-    "output_encoding":"no-op"
+    "output_encoding":"no-op",
+    "extra_config": {
+        "pt/i2s/integration-hub/gateway/config": {
+            "some": "config"
+          }
+    }
 
 },
 {

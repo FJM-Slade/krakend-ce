@@ -7,7 +7,8 @@ import (
 	"net/http"
 	"os"
 
-    middleware "integration-hub/middleware"
+	middleware "integration-hub/middleware"
+
 	krakendbf "github.com/devopsfaith/bloomfilter/krakend"
 	cel "github.com/devopsfaith/krakend-cel"
 	cmd "github.com/devopsfaith/krakend-cobra"
@@ -161,9 +162,9 @@ func (e *ExecutorBuilder) NewCmdExecutor(ctx context.Context) cmd.Executor {
 				e.BackendFactory.NewBackendFactory(ctx, logger, metricCollector),
 				metricCollector,
 			),
-			Middlewares:    []gin.HandlerFunc{
-            			middleware.IntegrationHub,
-            },
+			Middlewares: []gin.HandlerFunc{
+				middleware.IntegrationHub,
+			},
 			Logger:         logger,
 			HandlerFactory: e.HandlerFactory.NewHandlerFactory(logger, metricCollector, tokenRejecterFactory),
 			RunServer:      router.RunServerFunc(e.RunServerFactory.NewRunServer(logger, krakendrouter.RunServer)),
@@ -313,7 +314,7 @@ func startReporter(ctx context.Context, logger logging.Logger, cfg config.Servic
 
 	go func() {
 		serverID := uuid.NewV4().String()
-		logger.Info(fmt.Sprintf("registering usage stats for cluster ID '%s'", clusterID))
+		logger.Info(fmt.Sprintf("registering usage stats for cl	uster ID '%s'", clusterID))
 
 		if err := client.StartReporter(ctx, client.Options{
 			ClusterID: clusterID,

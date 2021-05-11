@@ -44,25 +44,18 @@ type bodyLogWriter struct {
 	body *bytes.Buffer
 }
 
+var i int
+
 // HeaderLogs appends logging related headers to request
 func IntegrationHub(c *gin.Context) {
+
+	fmt.Println("\n>>>>vez :", i)
 
 	txId := getTxID(c.Request)
 
 	fillPayload(txId, c)
-	ginBodyLogMiddleware(txId, c)
 
-	/*
-		if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", "{\"create_time\":1619028534209,\"event_level\":400,\"owner\":\"DFT_OWNER\",\"version\":\"DFT_VERSION\",\"type\":\"DFT_TYPE\",\"business_id\":\"DFT_BO\",\"uow_id\":\"198582f8-6414-46c7-bccb-c67910a554d9\"
-		,\"route_id\":\"/eGISGIVProxy/services/ProxyConsultaGIV\",\"step_id\":\"TXBEGIN\",\"event_type\":4,\"tx_userid\":\"some_user\",
-		\"tx_ttl\":0,
-		\"msg_data\":\"<soapenv:Envelope xmlns:soapenv=\\\"http://schemas.xmlsoap.org/soap/envelope/\\\" xmlns:prox=\\\"http://proxy.web.egis.i2s.com\\\"><soapenv:Header/><soapenv:Body> <prox:getValorMaxResgatavelApolice> <xml_in><![CDATA[<?xml version=\\\"1.0\\\" encoding=\\\"UTF-8\\\" standalone=\\\"yes\\\"?><Consulta><Apolice><Sistema>GIVITG</Sistema><Modalidade>5111</Modalidade><NumeroApolice>111185</NumeroApolice><TipoSinistro>1</TipoSinistro><Data>20181204</Data></Apolice></Consulta>]]></xml_in></prox:getValorMaxResgatavelApolice></soapenv:Body></soapenv:Envelope>\"
-		,\"user_msg\":null,\"message_id\":null,\"request_url\":null,\"url_template\":null,
-		\"local_ip\":null,\"remote_ip\":\"10.0.75.1\",\"queryparam\":\"\",\"http_method\":\"POST\",\"infos\":null,\"confidential\":1,\"appname\":\"PROXYAPP\"}"); err != nil {
-			fmt.Println("AMQ ERROR:", err)
-		}
-	*/
-	c.Next()
+	//c.Next()
 
 }
 
@@ -115,9 +108,16 @@ func fillPayload(txId string, c *gin.Context) {
 
 	fmt.Println("Request txId: " + c.GetHeader("txId") + "\n")
 
-	//if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
-	//	fmt.Println("AMQ ERROR:", err)
-	//}
+	go func() {
+		if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
+			fmt.Println("AMQ ERROR:", err)
+		}
+
+	}()
+
+	ginBodyLogMiddleware(txId, c)
+
+	//time.Sleep(5 * time.Second)
 
 }
 
@@ -168,9 +168,12 @@ func ginBodyLogMiddleware(txId string, c *gin.Context) {
 	}
 	fmt.Println("Response struct: " + string(out) + "\n")
 
-	//if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
-	//	fmt.Println("AMQ ERROR:", err)
-	//}
+	go func() {
+		if err := NewActiveMQ("localhost:61623").Send("/queue/proxyEventsQueue", string(out)); err != nil {
+			fmt.Println("AMQ ERROR:", err)
+		}
+
+	}()
 
 }
 
