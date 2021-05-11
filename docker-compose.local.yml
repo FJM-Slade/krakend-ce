@@ -1,0 +1,24 @@
+version: '3.5'
+
+services:
+  gateway-insuragility-app:
+    container_name: integration-hub-app
+    build: .
+    image: integration-hub:100
+    environment: 
+      FC_ENABLE: 1
+      FC_PARTIALS: /etc/krakend/partials
+      GODEBUG: "x509ignoreCN=0"
+    ports:
+      - "8090:8090"
+   # healthcheck:
+      # test: "wget -q -O- http://127.0.0.1:8090/hello 2>&1 | grep -ci \"Hello from KrakenD\""
+      # interval: 10s
+      # timeout: 5s
+      # retries: 5
+    networks:
+      - hubinternal
+
+networks:
+    hubinternal:
+        driver: bridge
