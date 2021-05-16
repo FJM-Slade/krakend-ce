@@ -14,5 +14,5 @@ export PATH &&
 
 
     # RUN FOR MACOS
-    export FC_ENABLE=1 && export FC_PARTIALS=$currentFolder/config/partials && export GODEBUG="x509ignoreCN=0" && $currentFolder/binaries/integration-hub run -c  $currentFolder/config/krakend.json
+    export FC_ENABLE=1 && export FC_PARTIALS=$currentFolder/config/partials && export FC_SETTINGS=$currentFolder/config/settings && export GODEBUG="x509ignoreCN=0" && $currentFolder/binaries/integration-hub run -c  $currentFolder/config/krakend.json
 

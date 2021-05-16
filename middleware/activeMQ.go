@@ -27,8 +27,6 @@
 package middleware
 
 import (
-	"time"
-
 	stomp "github.com/go-stomp/stomp"
 )
 
@@ -39,7 +37,7 @@ type ActiveMQ struct {
 //New activeMQ with addr[eg:localhost:61613] as host address.
 func NewActiveMQ(addr string) *ActiveMQ {
 	if addr == "" {
-		addr = "localhost:61613"
+		//addr = "localhost:61613"
 	}
 	return &ActiveMQ{addr}
 }
@@ -62,7 +60,7 @@ func (this *ActiveMQ) Connect() (*stomp.Conn, error) {
 
 // Send msg to destination
 func (this *ActiveMQ) Send(destination string, msg string) error {
-	time.Sleep(5 * time.Second)
+	//time.Sleep(5 * time.Second)
 	conn, err := this.Connect()
 	if err != nil {
 		return err

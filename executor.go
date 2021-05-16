@@ -163,7 +163,7 @@ func (e *ExecutorBuilder) NewCmdExecutor(ctx context.Context) cmd.Executor {
 				metricCollector,
 			),
 			Middlewares: []gin.HandlerFunc{
-				middleware.IntegrationHub,
+				middleware.IntegrationHub(cfg, getAmqpAddress(cfg)), middleware.InspectConfig(cfg.ExtraConfig),
 			},
 			Logger:         logger,
 			HandlerFactory: e.HandlerFactory.NewHandlerFactory(logger, metricCollector, tokenRejecterFactory),
@@ -173,6 +173,14 @@ func (e *ExecutorBuilder) NewCmdExecutor(ctx context.Context) cmd.Executor {
 		// start the engines
 		routerFactory.NewWithContext(ctx).Run(cfg)
 	}
+}
+func getAmqpAddress(cfg config.ServiceConfig) string {
+	var hubConfig = cfg.ExtraConfig["pt/i2s/utl/integrationhub/gateway"]
+	var gateway = hubConfig.(map[string]interface{})
+
+	fmt.Println("\nGetting the ActiveMQ configuration -->  ", (gateway["amqhost"].(string) + ":" + fmt.Sprint(gateway["amqport"].(float64))))
+	return (gateway["amqhost"].(string) + ":" + fmt.Sprint(gateway["amqport"].(float64)))
+
 }
 
 func (e *ExecutorBuilder) checkCollaborators() {
