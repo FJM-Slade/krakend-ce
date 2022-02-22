@@ -42,7 +42,7 @@ $ git clone https://github.com/FJM-Slade/krakend-ce.git
 This assumes that all steps for the [Installing](#installing) section were done with success.
 
 * Start application
-
+You can use a new
 ```
 $ docker-compose up -d
 ```
